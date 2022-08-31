@@ -103,7 +103,7 @@ plt.gca().legend(
     loc="lower right",
 )
 
-plt.savefig(f"benchmarks/benchmark_images/time_vs_reltols_{pybamm.__version__}.png")
+plt.savefig(f"./benchmarks/benchmark_images/time_vs_reltols_{pybamm.__version__}.png")
 
 
 content = f"## Solve Time vs Reltols\n<img src='./benchmark_images/time_vs_reltols_{pybamm.__version__}.png'>\n"  # noqa
