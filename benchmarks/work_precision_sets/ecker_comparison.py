@@ -4,6 +4,10 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
+owd = os.getcwd()
+# change working directory to the root of pybamm
+os.chdir(pybamm.root_dir())
+
 voltage_data_1C = pd.read_csv("pybamm/input/discharge_data/Ecker2015/Ecker_1C.csv", header=None).to_numpy()
 voltage_data_5C = pd.read_csv("pybamm/input/discharge_data/Ecker2015/Ecker_5C.csv", header=None).to_numpy()
 
@@ -57,7 +61,7 @@ ax2.set_title("5C")
 ax2.legend(["DFN", "Experiment"], loc="best")
 
 plt.tight_layout()
-
+os.chdir(owd)
 plt.savefig(f"benchmarks/benchmark_images/ecker_comparison_{pybamm.__version__}.png")
 
 
