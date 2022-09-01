@@ -1,3 +1,4 @@
+import os
 import pybamm
 import numpy as np
 import matplotlib.pyplot as plt
@@ -100,12 +101,12 @@ plt.gca().legend(
     parameters,
     loc="upper right",
 )
-plt.savefig(f"./benchmarks/benchmark_images/time_vs_dt_max_{pybamm.__version__}.png")
+plt.savefig(f"./benchmarks/benchmark_images/time_vs_dt_max_{pybamm.__version__}_{os.getenv('COMMIT_HASH')}.png")
 
 
-content = f"## Solve Time vs dt_max\n<img src='./benchmark_images/time_vs_dt_max_{pybamm.__version__}.png'>\n"  # noqa
+# content = f"## Solve Time vs dt_max\n<img src='./benchmark_images/time_vs_dt_max_{pybamm.__version__}.png'>\n"  # noqa
 
-with open("./benchmarks/release_work_precision_sets.md", "r") as original:
-    data = original.read()
-with open("./benchmarks/release_work_precision_sets.md", "w") as modified:
-    modified.write(f"{content}\n{data}")
+# with open("./benchmarks/release_work_precision_sets.md", "r") as original:
+#     data = original.read()
+# with open("./benchmarks/release_work_precision_sets.md", "w") as modified:
+#     modified.write(f"{content}\n{data}")
