@@ -17,13 +17,18 @@ jobs:
         python-version: 3.9
     - name: Get commit hash
       run: echo "COMMIT_HASH=${{ github.event.client_payload.message.commit_hash }}" >> $GITHUB_ENV
-    - name: Get current date
-      run: echo "VERSION=$(date +'%y.%-m')" >> $GITHUB_ENV
-    - name: Install PyBaMM(install commit_hash version of pybamm)
-      run: python -m pip install pybamm==22.8
+    - name: Install PyBaMM
+      run: python -m pip git+https://github.com/pybamm-team/PyBaMM@develop
     - name: Run time_vs_* benchmarks for PyBaMM develop - ${{ env.COMMIT_HASH }}
       run: |
         python benchmarks/work_precision_sets/time_vs_dt_max.py
+        python benchmarks/work_precision_sets/time_vs_mesh_size.py
+        python benchmarks/work_precision_sets/time_vs_no_of_states.py
+        python benchmarks/work_precision_sets/time_vs_reltols.py
+        python benchmarks/work_precision_sets/time_vs_abstols.py
+        python benchmarks/work_precision_sets/comsol_comparison.py
+        python benchmarks/work_precision_sets/ecker_comparison.py
+        python benchmarks/work_precision_sets/discharge_curve.py
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
       with:
@@ -33,7 +38,7 @@ jobs:
         title: Work precision sets for PyBaMM develop - ${{ env.COMMIT_HASH }}
         body: |
             Update work precision sets for PyBaMM develop - ${{ env.COMMIT_HASH }} in `release_work_precision_sets.md`
-  benchmarks_on_release:
+  benchmarks on release:
     if: github.event.action == 'release'
     runs-on: ubuntu-latest
     steps:
@@ -42,5 +47,30 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: 3.9
-    - name: print commit hash
-      run: echo ${{ github.event.client_payload.message.commit_hash }}
+    - name: Get current date
+      run: echo "VERSION=$(date +'%y.%-m')" >> $GITHUB_ENV
+    - name: Install pybamm
+      run: |
+        pip install -U pybamm
+
+    - name: Get current date
+      run: echo "VERSION=$(date +'%y.%-m')" >> $GITHUB_ENV
+    - name: Update Release
+      run: python -c "from make_release import get_readme; get_release()"
+    - name: Create release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ env.VERSION }}
+        body_path: README.md
+
+    - name: Update Readme
+      run: python -c "from make_release import get_readme; update_readme()"
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v3
+      with:
+        delete-branch: true
+        branch-suffix: short-commit-hash
+        commit-message: Update README for PyBaMM - v${{ env.VERSION }}
+        title: Update README for PyBaMM  - v${{ env.VERSION }}
+        body: |
+            Make sure that a new release has been automatically created before merging this PR.
