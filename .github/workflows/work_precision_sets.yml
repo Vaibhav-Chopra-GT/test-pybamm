@@ -47,7 +47,9 @@ jobs:
       run: |
         pip install -U pybamm
     - name: Update Release
-      run: python -c "from make_release import get_release, get_prev_version; get_release(); get_prev_version()"
+      run: |
+        python -c "from make_release import get_release, get_version; get_release(); get_version()"
+        echo ${{ env.VERSION }}
     - name: Create release
       uses: softprops/action-gh-release@v1
       with:
@@ -66,7 +68,9 @@ jobs:
       run: |
         pip install -U pybamm
     - name: Update Readme
-      run: python -c "from make_release import update_readme, get_version; update_readme(); get_version()"
+      run: |
+        python -c "from make_release import update_readme, get_version; update_readme(); get_version()"
+        echo ${{ env.VERSION }}
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
       with:

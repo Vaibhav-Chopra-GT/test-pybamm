@@ -21,10 +21,13 @@ def get_prev_version():
         prev_version = f"{int(pybamm.__version__[:2]) - 1}.12"
     else:
         prev_version = f"{pybamm.__version__[:2]}.{int(pybamm.__version__[pybamm.__version__.index('.') + 1:]) - 1}"
-    os.environ["VERSION"] = prev_version
+    
     return prev_version
 def get_version():
-    os.environ["VERSION"] = pybamm.__version__
+    env_file = os.getenv('GITHUB_ENV')
+
+    with open(env_file, "a") as myfile:
+        myfile.write(f"VERSION={pybamm.__version__}")
 
 def update_readme():
 
