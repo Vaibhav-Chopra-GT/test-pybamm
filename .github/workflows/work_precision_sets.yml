@@ -32,7 +32,7 @@ jobs:
         title: Work precision sets for PyBaMM develop - ${{ env.COMMIT_HASH }}
         body: |
             Update work precision sets for PyBaMM develop - ${{ env.COMMIT_HASH }} in `release_work_precision_sets.md`
-  benchmarks on release:
+  benchmarks_on_release:
     if: github.event.action == 'release'
     runs-on: ubuntu-latest
     steps:
