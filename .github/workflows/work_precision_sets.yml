@@ -52,7 +52,7 @@ jobs:
     - name: Get current date
       run: echo "VERSION=$(date +'%y.%-m')" >> $GITHUB_ENV
     - name: Update Release
-      run: python -c "from make_release import get_readme; get_release()"
+      run: python -c "from make_release import get_release; get_release()"
     - name: Create release
       uses: softprops/action-gh-release@v1
       with:
@@ -60,7 +60,7 @@ jobs:
         body_path: README.md
 
     - name: Update Readme
-      run: python -c "from make_release import get_readme; update_readme()"
+      run: python -c "from make_release import update_readme; update_readme()"
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
       with:
