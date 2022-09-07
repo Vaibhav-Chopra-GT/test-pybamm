@@ -43,24 +43,30 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: 3.9
-    - name: Get current date
-      run: echo "VERSION=$(date +'%y.%-m')" >> $GITHUB_ENV
     - name: Install pybamm
       run: |
         pip install -U pybamm
-
-    - name: Get current date
-      run: echo "VERSION=$(date +'%y.%-m')" >> $GITHUB_ENV
     - name: Update Release
-      run: python -c "from make_release import get_release; get_release()"
+      run: python -c "from make_release import get_release, get_prev_version; get_release(); get_prev_version()"
     - name: Create release
       uses: softprops/action-gh-release@v1
       with:
         tag_name: ${{ env.VERSION }}
         body_path: README.md
-
+  update_readme:
+    needs: benchmarks_on_release
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.9
+    - name: Install pybamm
+      run: |
+        pip install -U pybamm
     - name: Update Readme
-      run: python -c "from make_release import update_readme; update_readme()"
+      run: python -c "from make_release import update_readme, get_version; update_readme(); get_version()"
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
       with:

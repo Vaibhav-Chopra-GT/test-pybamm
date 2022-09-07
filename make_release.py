@@ -1,5 +1,5 @@
 import pybamm
-
+import os
 
 def get_release():
     readme = open("./README.md", "r")
@@ -16,12 +16,15 @@ def get_release():
 
 
 def get_prev_version():
+    
     if pybamm.__version__[-1] == "1":
         prev_version = f"{int(pybamm.__version__[:2]) - 1}.12"
     else:
         prev_version = f"{pybamm.__version__[:2]}.{int(pybamm.__version__[pybamm.__version__.index('.') + 1:]) - 1}"
+    os.environ["VERSION"] = prev_version
     return prev_version
-
+def get_version():
+    os.environ["VERSION"] = pybamm.__version__
 
 def update_readme():
 
