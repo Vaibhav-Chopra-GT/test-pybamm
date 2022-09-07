@@ -1,5 +1,4 @@
-# PyBaMM validation
-Benchmarks corresponding to the latest commit on develop branch in the PyBaMM repository
+# PyBaMM validation - 22.8
 
 ## Solve Time vs Abstols
 <img src='./benchmarks/benchmark_images/time_vs_abstols_22.8.png'>
