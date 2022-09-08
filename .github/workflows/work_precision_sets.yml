@@ -25,10 +25,12 @@ jobs:
         git clone -b develop --single-branch https://github.com/pybamm-team/PyBaMM
         cd PyBaMM
         python -m pip install ".[dev]"
-        pip install wget
-        python scripts/install_KLU_Sundials.py
     - name: Run time_vs_* benchmarks for PyBaMM develop - ${{ env.COMMIT_HASH }}
       run: |
+        cd PyBaMM
+        pip install wget
+        python scripts/install_KLU_Sundials.py
+        cd ..
         python benchmarks/work_precision_sets/comsol_comparison.py
         python benchmarks/work_precision_sets/time_vs_abstols.py
    
