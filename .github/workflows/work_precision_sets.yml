@@ -23,7 +23,7 @@ jobs:
         python -m pip install git+https://github.com/pybamm-team/PyBaMM@develop
     - name: Run time_vs_* benchmarks for PyBaMM develop - ${{ env.COMMIT_HASH }}
       run: |
-        python benchmarks/work_precision_sets/time_vs_dt_max.py
+        python benchmarks/work_precision_sets/comsol_comparison.py
    
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v3
