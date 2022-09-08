@@ -25,9 +25,6 @@ jobs:
         git clone -b develop --single-branch https://github.com/pybamm-team/PyBaMM
         cd PyBaMM
         python -m pip install ".[dev]"
-    - name: Install KLU sundials
-      run: |
-        cd PyBaMM
         pip install wget
         python scripts/install_KLU_Sundials.py
     - name: Run time_vs_* benchmarks for PyBaMM develop - ${{ env.COMMIT_HASH }}
