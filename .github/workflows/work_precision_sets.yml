@@ -27,8 +27,8 @@ jobs:
         python -m pip install ".[dev]"
     - name: Install KLU sundials
       run: |
+        cd PyBaMM
         python ./scripts/install_KLU_Sundials.py
-        cd ..
     - name: Run time_vs_* benchmarks for PyBaMM develop - ${{ env.COMMIT_HASH }}
       run: |
         python benchmarks/work_precision_sets/comsol_comparison.py
