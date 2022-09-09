@@ -30,6 +30,7 @@ jobs:
         git clone https://github.com/pybind/pybind11.git
         pip install wget
         python scripts/install_KLU_Sundials.py
+        pip install -r requirements.txt
         python -m unittest
     - name: Run time_vs_* benchmarks for PyBaMM develop - ${{ env.COMMIT_HASH }}
       run: |
