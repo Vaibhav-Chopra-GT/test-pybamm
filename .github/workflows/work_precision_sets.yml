@@ -18,7 +18,7 @@ jobs:
     - name: Get commit hash
       run: echo "COMMIT_HASH=${{ github.event.client_payload.message.commit_hash }}" >> $GITHUB_ENV
     - name: Install dependencies
-      run: sudo apt install libopenblas-dev gcc gfortran cmake
+      run: sudo apt install libopenblas-dev gcc gfortran
     - name: Clone PyBaMM
       run: |
         git clone -b develop --single-branch https://github.com/pybamm-team/PyBaMM
@@ -26,16 +26,14 @@ jobs:
     - name: Install PyBaMM
       run: |
         python -m pip install wheel
-        cd PyBaMM
-        git clone https://github.com/pybind/pybind11.git
-        pip install wget
-        python scripts/install_KLU_Sundials.py
-        pip install -r requirements.txt
-        python -m unittest -v
+        cd PyBaMM  
+        pip install wget tox
+        tox -e pybamm-requires
+        tox -e unit
     - name: Run time_vs_* benchmarks for PyBaMM develop - ${{ env.COMMIT_HASH }}
       run: |
       
-        
+        python benchmaeks/work_precision_sets/comsol_comparison.py
         python benchmarks/work_precision_sets/time_vs_abstols.py
    
     - name: Create Pull Request
