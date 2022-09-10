@@ -21,7 +21,7 @@ jobs:
       run: sudo apt install libopenblas-dev gcc gfortran
     - name: Clone PyBaMM
       run: |
-        git clone -b develop --single-branch https://github.com/pybamm-team/PyBaMM
+        git clone -b develop --single-branch https://github.com/Vaibhav-Chopra-GT/PyBaMM
     
     - name: Install PyBaMM
       run: |
@@ -29,7 +29,7 @@ jobs:
         cd PyBaMM  
         pip install wget tox
         tox -e pybamm-requires
-        tox -e unit
+        tox -e benchmarks
     - name: Run time_vs_* benchmarks for PyBaMM develop - ${{ env.COMMIT_HASH }}
       run: |
       
