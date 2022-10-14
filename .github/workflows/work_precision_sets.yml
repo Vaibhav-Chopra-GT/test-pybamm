@@ -35,7 +35,7 @@ jobs:
         python -m pip install .
     - name: Run time_vs_* benchmarks for PyBaMM develop - ${{ env.COMMIT_HASH }}
       run: |
-        cd ..
+        ls
         python benchmarks/work_precision_sets/time_vs_abstols.py
         python benchmarks/work_precision_sets/comsol_comparison.py
     - name: Create Pull Request
